@@ -1,0 +1,4 @@
+收索引擎爬虫设置
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Disallow:
