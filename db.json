@@ -1,19 +1,23 @@
 {
-  "posts": [
-    {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
-    }
-  ],
-  "comments": [
-    {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
-    }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
+	"users": [
+		{
+			"id": 1,
+			"name": "桃幺"
+		},
+		{
+			"id": 2,
+			"name": "磨牙"
+		},
+		{
+			"id": 3,
+			"name": "滚滚"
+		}
+	],
+
+	"projects": [
+		{
+			"id": 1,
+			"name": "typicode"
+		}
+	]
 }

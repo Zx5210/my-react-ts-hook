@@ -1,8 +1,4 @@
-import { useEffect, useState } from 'react'
-
-export const SearchPanel = ({ param, setParam }) => {
-	const [users, setUsers] = useState([])
-
+export const SearchPanel = ({ users, param, setParam }) => {
 	return (
 		<form>
 			<input
@@ -11,25 +7,26 @@ export const SearchPanel = ({ param, setParam }) => {
 				onChange={ent =>
 					setParam({
 						...param,
-						name: EventTarget.target.value,
+						name: ent.target.value,
+					})
+				}
+			/>
+			<select
+				value={param.id}
+				onChange={evt =>
+					setParam({
+						...param,
+						id: evt.target.value,
 					})
 				}
 			>
-				<select
-					value={param.personId}
-					onChange={evt =>
-						setParam({
-							...param,
-							personId: evt.target.value,
-						})
-					}
-				>
-					<option value={''}>负责人</option>
-					{users.map(user => (
-						<option value={user.id}>{user.name}</option>
-					))}
-				</select>
-			</input>
+				<option value={''}>负责人</option>
+				{users.map(user => (
+					<option key={user.id} value={user.id}>
+						{user.name}
+					</option>
+				))}
+			</select>
 		</form>
 	)
 }
