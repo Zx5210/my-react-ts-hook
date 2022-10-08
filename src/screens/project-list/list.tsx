@@ -1,4 +1,11 @@
-export const List = ({ list }) => {
+interface Project {
+	id: string
+	name: string
+}
+interface ListPriject {
+	list: Project[]
+}
+export const List = ({ list }: ListPriject) => {
 	return (
 		<table>
 			<thead>
@@ -8,7 +15,7 @@ export const List = ({ list }) => {
 				</tr>
 			</thead>
 			<tbody>
-				{list.map(project => (
+				{list.map((project: Project) => (
 					<tr key={project.id}>
 						<td>{project.name}</td>
 						<td>{project.id}</td>

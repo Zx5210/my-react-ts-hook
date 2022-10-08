@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 
-export const isFalsy = val => (val === 0 ? false : !val)
+export const isFalsy = (val: unknown): boolean => (val === 0 ? false : !val)
 
 // 判断对象是否有空值，返回一个新对象，不能污染原有对象
 
 // 判断什么时候使用hook什么时候使用函数，看函数里面需不需要使用hook，如果不需要就当函数需要就用hook
-export const cleanObject = obj => {
+export const cleanObject = (obj: any) => {
 	const result = { ...obj }
-	Object.keys(obj).forEach(key => {
+	Object.keys(obj).forEach((key: string) => {
 		const val = result[key]
 		if (isFalsy(val)) {
 			delete result[key]
@@ -17,7 +17,7 @@ export const cleanObject = obj => {
 }
 
 // useMount
-export const useMount = callback => {
+export const useMount = (callback: () => void) => {
 	useEffect(() => {
 		callback()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -39,7 +39,7 @@ export const useMount = callback => {
 // 	}
 // }
 // 使用hook修改debounce
-export const useDebounce = (value, delay) => {
+export const useDebounce = <T>(value: T, delay?: number) => {
 	// 接收参数后创建新的useStata
 	const [debouncedValue, setDebouncedValue] = useState(value)
 	// 监听value和delay的变化
