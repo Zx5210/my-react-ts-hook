@@ -1,9 +1,11 @@
-import { ProjectListScreen } from 'screens/project-list'
+import { Login } from 'login'
+// import { ProjectListScreen } from 'screens/project-list'
 
 const App = () => {
 	return (
 		<div>
-			<ProjectListScreen></ProjectListScreen>
+			{/* <ProjectListScreen></ProjectListScreen> */}
+			<Login />
 		</div>
 	)
 }

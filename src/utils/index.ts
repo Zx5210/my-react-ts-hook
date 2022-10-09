@@ -5,8 +5,8 @@ export const isFalsy = (val: unknown): boolean => (val === 0 ? false : !val)
 // 判断对象是否有空值，返回一个新对象，不能污染原有对象
 
 // 判断什么时候使用hook什么时候使用函数，看函数里面需不需要使用hook，如果不需要就当函数需要就用hook
-export const cleanObject = (obj: any) => {
-	const result = { ...obj }
+export const cleanObject = (obj: object) => {
+	const result: any = { ...obj }
 	Object.keys(obj).forEach((key: string) => {
 		const val = result[key]
 		if (isFalsy(val)) {
@@ -39,7 +39,7 @@ export const useMount = (callback: () => void) => {
 // 	}
 // }
 // 使用hook修改debounce
-export const useDebounce = <T>(value: T, delay?: number) => {
+export const useDebounce = <T>(value: T, delay?: number): T => {
 	// 接收参数后创建新的useStata
 	const [debouncedValue, setDebouncedValue] = useState(value)
 	// 监听value和delay的变化

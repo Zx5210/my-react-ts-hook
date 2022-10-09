@@ -13,7 +13,7 @@ export const ProjectListScreen = () => {
 	})
 	const [list, setList] = useState([])
 	//包裹一层防抖函数，传入修改的数值和防抖时间
-	const debouncedParam = useDebounce(param, 1000)
+	const debouncedParam = useDebounce(param, 500)
 	useEffect(() => {
 		fetch(
 			`${apiURL}/projects?${qs.stringify(cleanObject(debouncedParam))}`
