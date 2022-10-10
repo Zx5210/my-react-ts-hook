@@ -1,3 +1,4 @@
+import { AuthForm } from 'context/auth-context'
 import { User } from 'screens/project-list/search-panel'
 const apiURL = process.env.REACT_APP_API_URL
 
@@ -10,7 +11,7 @@ export const handleUserResponse = ({ user }: { user: User }) => {
 	return user
 }
 
-export const login = (param: { username: string; password: string }) => {
+export const login = (param: AuthForm) => {
 	return fetch(`${apiURL}/login`, {
 		method: 'POST',
 		headers: {
@@ -26,7 +27,7 @@ export const login = (param: { username: string; password: string }) => {
 	})
 }
 
-export const register = (param: { username: string; password: string }) => {
+export const register = (param: AuthForm) => {
 	return fetch(`${apiURL}/register`, {
 		method: 'POST',
 		headers: {

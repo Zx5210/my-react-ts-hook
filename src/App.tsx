@@ -1,13 +1,9 @@
-import { Login } from 'login'
-// import { ProjectListScreen } from 'screens/project-list'
-
+import { AuthenticatedApp } from 'authenticated-app'
+import { useAuth } from 'context/auth-context'
+import { UnauthenticatedApp } from 'unauthenticated-app'
 const App = () => {
-	return (
-		<div>
-			{/* <ProjectListScreen></ProjectListScreen> */}
-			<Login />
-		</div>
-	)
+	const { user } = useAuth()
+	return <div>{user ? <AuthenticatedApp /> : <UnauthenticatedApp />}</div>
 }
 
 export default App

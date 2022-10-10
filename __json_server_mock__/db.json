@@ -13,11 +13,17 @@
 			"name": "滚滚"
 		}
 	],
-
 	"projects": [
 		{
 			"id": 1,
 			"name": "typicode"
+		}
+	],
+	"register": [
+		{
+			"username": "df",
+			"password": "111",
+			"id": "df"
 		}
 	]
 }

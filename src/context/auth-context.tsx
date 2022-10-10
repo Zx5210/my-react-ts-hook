@@ -2,9 +2,10 @@ import React, { ReactNode, useState } from 'react'
 import * as auth from 'auth-provider'
 import { User } from 'screens/project-list/search-panel'
 
-interface AuthForm {
+export interface AuthForm {
 	username: string
 	password: string
+	id?: string
 }
 
 const AuthContext = React.createContext<

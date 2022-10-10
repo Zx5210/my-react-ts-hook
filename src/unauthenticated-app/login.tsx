@@ -1,8 +1,8 @@
 import { useAuth } from 'context/auth-context'
 import { FormEvent } from 'react'
 
-export const Login = ({ value }: any) => {
-	const { user, login } = useAuth()
+export const LoginScreen = ({ value }: any) => {
+	const { login } = useAuth()
 	//这种使用 请求方式 + 请求的url地址的这种pathinfo模式形成的api，通常都叫做RESTFull风格的接口api。
 	//不符合RESTFull规范的api
 	// const login = (param: { username: string; password: string }) => {
@@ -28,7 +28,6 @@ export const Login = ({ value }: any) => {
 
 	return (
 		<form onSubmit={handleSubmit}>
-			{user ? <div>登录成功! 用户名:{user?.name}</div> : null}
 			<div>
 				<label htmlFor="username">用户名</label>
 				<input id={'username'} type="text"></input>
