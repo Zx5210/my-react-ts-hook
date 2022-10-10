@@ -4,7 +4,7 @@ import { ProjectListScreen } from 'screens/project-list'
 export const AuthenticatedApp = () => {
 	return (
 		<div>
-			<div onClick={() => logout()}>登出</div>
+			<button onClick={() => logout()}>登出</button>
 			<ProjectListScreen />
 		</div>
 	)

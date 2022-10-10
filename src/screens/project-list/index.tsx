@@ -1,9 +1,8 @@
-import qs from 'qs'
 import { List } from './list'
 import { SearchPanel } from './search-panel'
 import { useEffect, useState } from 'react'
 import { cleanObject, useDebounce, useMount } from 'utils'
-const apiURL = process.env.REACT_APP_API_URL
+import { useHttp } from 'utils/http'
 
 export const ProjectListScreen = () => {
 	const [users, setUsers] = useState([])
@@ -14,23 +13,16 @@ export const ProjectListScreen = () => {
 	const [list, setList] = useState([])
 	//包裹一层防抖函数，传入修改的数值和防抖时间
 	const debouncedParam = useDebounce(param, 500)
+	const client = useHttp()
+
 	useEffect(() => {
-		fetch(
-			`${apiURL}/projects?${qs.stringify(cleanObject(debouncedParam))}`
-		).then(async res => {
-			if (res.ok) {
-				setList(await res.json())
-			}
-		})
+		client('projects', cleanObject(debouncedParam)).then(setList)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [debouncedParam])
 
 	// 只执行一次，相当于初始化执行
 	useMount(() => {
-		fetch(`${apiURL}/users`).then(async res => {
-			if (res.ok) {
-				setUsers(await res.json())
-			}
-		})
+		client('users').then(setUsers)
 	})
 
 	return (

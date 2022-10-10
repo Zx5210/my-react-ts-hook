@@ -1,11 +1,22 @@
 import React, { ReactNode, useState } from 'react'
 import * as auth from 'auth-provider'
 import { User } from 'screens/project-list/search-panel'
+import { http } from 'utils/http'
+import { useMount } from 'utils'
 
 export interface AuthForm {
 	username: string
 	password: string
 	id?: string
+}
+//初始判断token里面是否有值有的话请求me的接口获取用户消息
+const bootstrapUser = async () => {
+	let user
+	const token = auth.getToken()
+	if (token) {
+		user = await http('me', { token })
+	}
+	return user
 }
 
 const AuthContext = React.createContext<
@@ -27,6 +38,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	const login = (form: AuthForm) => auth.login(form).then(setUser)
 	const register = (form: AuthForm) => auth.register(form).then(setUser)
 	const logout = () => auth.logout().then(() => setUser(null))
+
+	// 初始化请求赋值到用户信息
+	useMount(() => {
+		bootstrapUser().then(setUser)
+	})
 
 	return (
 		<AuthContext.Provider
