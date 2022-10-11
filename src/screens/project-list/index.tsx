@@ -16,7 +16,8 @@ export const ProjectListScreen = () => {
 	const client = useHttp()
 
 	useEffect(() => {
-		client('projects', cleanObject(debouncedParam)).then(setList)
+		const { id, name } = cleanObject(debouncedParam)
+		client('projects', { data: { ceartNameId: id, name } }).then(setList)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [debouncedParam])
 
@@ -28,7 +29,7 @@ export const ProjectListScreen = () => {
 	return (
 		<div>
 			<SearchPanel users={users} param={param} setParam={setParam} />
-			<List list={list} />
+			<List list={list} users={users} />
 		</div>
 	)
 }

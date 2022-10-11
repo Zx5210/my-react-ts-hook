@@ -1,28 +1,40 @@
-import { useAuth } from 'context/auth-context'
-import { FormEvent } from 'react'
+import { Button, Form, Input } from 'antd'
+import { AuthForm, useAuth } from 'context/auth-context'
 
-export const RegisterScreen = ({ value }: any) => {
+export const RegisterScreen = ({ value, setIsRegister, isRegister }: any) => {
 	const { register } = useAuth()
 
 	// HTMLFormElement extends Element
-	const handleSubmit = (env: FormEvent<HTMLFormElement>) => {
-		env.preventDefault()
-		const username = (env.currentTarget.elements[0] as HTMLInputElement).value
-		const password = (env.currentTarget.elements[1] as HTMLInputElement).value
-		register({ username, password, id: username })
+	const handleSubmit = (values: AuthForm) => {
+		register(values)
 	}
 
 	return (
-		<form onSubmit={handleSubmit}>
+		<Form onFinish={handleSubmit}>
 			<div>
-				<label htmlFor="username">用户名</label>
-				<input id={'username'} type="text"></input>
+				<Form.Item
+					name="username"
+					rules={[{ required: true, message: '请输入用户名!' }]}
+				>
+					<Input placeholder="用户名" />
+				</Form.Item>
 			</div>
 			<div>
-				<label htmlFor="password">密码</label>
-				<input id={'password'} type="password"></input>
+				<Form.Item
+					name="password"
+					rules={[{ required: true, message: '请输入密码!' }]}
+				>
+					<Input.Password placeholder="密码" />
+				</Form.Item>
 			</div>
-			<button type={'submit'}>注册</button>
-		</form>
+			<div style={{ display: 'flex', justifyContent: 'space-between' }}>
+				<Button htmlType="submit" type={'primary'}>
+					注册
+				</Button>
+				<Button onClick={() => setIsRegister(!isRegister)}>
+					{isRegister ? '去登录' : '去注册'}
+				</Button>
+			</div>
+		</Form>
 	)
 }

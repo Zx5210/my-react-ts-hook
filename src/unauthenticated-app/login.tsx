@@ -1,7 +1,7 @@
-import { useAuth } from 'context/auth-context'
-import { FormEvent } from 'react'
+import { Button, Form, Input } from 'antd'
+import { AuthForm, useAuth } from 'context/auth-context'
 
-export const LoginScreen = ({ value }: any) => {
+export const LoginScreen = ({ value, setIsRegister, isRegister }: any) => {
 	const { login } = useAuth()
 	//这种使用 请求方式 + 请求的url地址的这种pathinfo模式形成的api，通常都叫做RESTFull风格的接口api。
 	//不符合RESTFull规范的api
@@ -19,24 +19,36 @@ export const LoginScreen = ({ value }: any) => {
 	// }
 
 	// HTMLFormElement extends Element
-	const handleSubmit = (env: FormEvent<HTMLFormElement>) => {
-		env.preventDefault()
-		const username = (env.currentTarget.elements[0] as HTMLInputElement).value
-		const password = (env.currentTarget.elements[1] as HTMLInputElement).value
-		login({ username, password })
+	const handleSubmit = (values: AuthForm) => {
+		login(values)
 	}
 
 	return (
-		<form onSubmit={handleSubmit}>
+		<Form onFinish={handleSubmit}>
 			<div>
-				<label htmlFor="username">用户名</label>
-				<input id={'username'} type="text"></input>
+				<Form.Item
+					name="username"
+					rules={[{ required: true, message: '请输入用户名!' }]}
+				>
+					<Input placeholder="用户名" />
+				</Form.Item>
 			</div>
 			<div>
-				<label htmlFor="password">密码</label>
-				<input id={'password'} type="password"></input>
+				<Form.Item
+					name="password"
+					rules={[{ required: true, message: '请输入密码!' }]}
+				>
+					<Input.Password placeholder="密码" />
+				</Form.Item>
 			</div>
-			<button type={'submit'}>登录</button>
-		</form>
+			<div style={{ display: 'flex', justifyContent: 'space-between' }}>
+				<Button htmlType="submit" type={'primary'}>
+					登录
+				</Button>
+				<Button onClick={() => setIsRegister(!isRegister)}>
+					{isRegister ? '去登录' : '去注册'}
+				</Button>
+			</div>
+		</Form>
 	)
 }
