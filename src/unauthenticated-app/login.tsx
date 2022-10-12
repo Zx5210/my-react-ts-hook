@@ -1,7 +1,8 @@
-import { Button, Form, Input } from 'antd'
+import { Form, Input } from 'antd'
 import { AuthForm, useAuth } from 'context/auth-context'
+import { LongButton } from 'unauthenticated-app'
 
-export const LoginScreen = ({ value, setIsRegister, isRegister }: any) => {
+export const LoginScreen = ({ value }: any) => {
 	const { login } = useAuth()
 	//这种使用 请求方式 + 请求的url地址的这种pathinfo模式形成的api，通常都叫做RESTFull风格的接口api。
 	//不符合RESTFull规范的api
@@ -24,7 +25,7 @@ export const LoginScreen = ({ value, setIsRegister, isRegister }: any) => {
 	}
 
 	return (
-		<Form onFinish={handleSubmit}>
+		<Form size="large" onFinish={handleSubmit}>
 			<div>
 				<Form.Item
 					name="username"
@@ -42,12 +43,9 @@ export const LoginScreen = ({ value, setIsRegister, isRegister }: any) => {
 				</Form.Item>
 			</div>
 			<div style={{ display: 'flex', justifyContent: 'space-between' }}>
-				<Button htmlType="submit" type={'primary'}>
+				<LongButton size="large" htmlType="submit" type={'primary'}>
 					登录
-				</Button>
-				<Button onClick={() => setIsRegister(!isRegister)}>
-					{isRegister ? '去登录' : '去注册'}
-				</Button>
+				</LongButton>
 			</div>
 		</Form>
 	)

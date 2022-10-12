@@ -1,7 +1,8 @@
-import { Button, Form, Input } from 'antd'
+import { Form, Input } from 'antd'
 import { AuthForm, useAuth } from 'context/auth-context'
+import { LongButton } from 'unauthenticated-app'
 
-export const RegisterScreen = ({ value, setIsRegister, isRegister }: any) => {
+export const RegisterScreen = () => {
 	const { register } = useAuth()
 
 	// HTMLFormElement extends Element
@@ -10,7 +11,7 @@ export const RegisterScreen = ({ value, setIsRegister, isRegister }: any) => {
 	}
 
 	return (
-		<Form onFinish={handleSubmit}>
+		<Form size="large" onFinish={handleSubmit}>
 			<div>
 				<Form.Item
 					name="username"
@@ -28,12 +29,9 @@ export const RegisterScreen = ({ value, setIsRegister, isRegister }: any) => {
 				</Form.Item>
 			</div>
 			<div style={{ display: 'flex', justifyContent: 'space-between' }}>
-				<Button htmlType="submit" type={'primary'}>
+				<LongButton size="large" htmlType="submit" type={'primary'}>
 					注册
-				</Button>
-				<Button onClick={() => setIsRegister(!isRegister)}>
-					{isRegister ? '去登录' : '去注册'}
-				</Button>
+				</LongButton>
 			</div>
 		</Form>
 	)
