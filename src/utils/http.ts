@@ -25,7 +25,7 @@ export const http = async (
 	} else {
 		config.body = JSON.stringify(data || {})
 	}
-	console.log(config)
+
 	//fetch与axios不同
 	//fetch请求不为2XX异常不会抛出异常需要手动抛出，只要当断网等异常才会抛出
 	return window.fetch(`${apiURL}/${endpoint}`, config).then(async res => {

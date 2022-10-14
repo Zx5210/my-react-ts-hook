@@ -1,4 +1,5 @@
-import { Input, Select } from 'antd'
+/* @jsxImportSource @emotion/react */
+import { Form, Input, Select } from 'antd'
 
 export interface User {
 	id: string
@@ -31,10 +32,12 @@ export const SearchPanel = ({ users, param, setParam }: SearchPanelProps) => {
 		</Select>
 	)
 	return (
-		<form>
+		<Form css={{ width: '30rem', marginBottom: '2rem' }}>
 			<Input
 				defaultValue={param.name}
 				addonAfter={selectAfter}
+				placeholder="植物名称"
+				allowClear
 				onChange={ent =>
 					setParam({
 						...param,
@@ -42,6 +45,6 @@ export const SearchPanel = ({ users, param, setParam }: SearchPanelProps) => {
 					})
 				}
 			/>
-		</form>
+		</Form>
 	)
 }

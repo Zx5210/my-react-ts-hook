@@ -1,30 +1,40 @@
-import { Table } from 'antd'
+import { Table, TableProps } from 'antd'
+import dayjs from 'dayjs'
 import { User } from './search-panel'
 
-interface Project {
+export interface Project {
 	id: string
 	name: string
 	ceartNameId: string
+	creatTime: number
 }
-interface ListPriject {
+
+interface ListPriject extends TableProps<Project> {
 	list: Project[]
 	users: User[]
 }
-export const List = ({ list, users }: ListPriject) => {
+export const List = ({ list, users, ...props }: ListPriject) => {
 	const columns = [
 		{
-			title: 'Name',
+			title: '植物名',
 			dataIndex: 'name',
 			key: 'name',
 			sorter: (a: Project, b: Project) => a.name.localeCompare(b.name),
 		},
 		{
-			title: 'ceartTime',
-			dataIndex: 'ceartTime',
-			key: 'ceartTime',
+			title: '栽种时间',
+			render: (value: string, project: Project) => {
+				return (
+					<span>
+						{project.creatTime
+							? dayjs(project.creatTime).format('YYYY-MM-DD HH:mm:ss')
+							: null}
+					</span>
+				)
+			},
 		},
 		{
-			title: 'ceartName',
+			title: '栽种人',
 			render(value: string, project: Project) {
 				return (
 					<span>
@@ -35,5 +45,12 @@ export const List = ({ list, users }: ListPriject) => {
 			},
 		},
 	]
-	return <Table columns={columns} dataSource={list} />
+	return (
+		<Table
+			rowKey={record => record.id}
+			columns={columns}
+			dataSource={list}
+			{...props}
+		/>
+	)
 }

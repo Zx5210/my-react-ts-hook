@@ -1,11 +1,13 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import styled from '@emotion/styled'
 import logo from 'assets/logo.png'
-import { Button } from 'antd'
-import { logout } from 'auth-provider'
+import { Dropdown, Menu } from 'antd'
 import { ProjectListScreen } from 'screens/project-list'
 import { Row } from 'components/lib'
+import { useAuth } from 'context/auth-context'
 
 export const AuthenticatedApp = () => {
+	const { user, logout } = useAuth()
 	return (
 		<Container>
 			<Header>
@@ -15,7 +17,17 @@ export const AuthenticatedApp = () => {
 					<h2>苗圃</h2>
 				</HeaderLeft>
 				<HeaderRight>
-					<Button onClick={logout}>登出</Button>
+					<Dropdown
+						overlay={
+							<Menu>
+								<Menu.Item key={'logout'}>
+									<a onClick={logout}>登出</a>
+								</Menu.Item>
+							</Menu>
+						}
+					>
+						<a onClick={e => e.preventDefault()}>Hi,{user?.name}</a>
+					</Dropdown>
 				</HeaderRight>
 			</Header>
 			<Nav>Nav</Nav>
@@ -32,6 +44,7 @@ const Container = styled.div`
 	height: 100vh;
 	grid-template-rows: 6rem 1fr 6rem;
 	grid-template-columns: 20rem 1fr 20rem;
+	grid-row-gap: 2rem;
 	grid-template-areas:
 		'header header header'
 		'nav main aside'
@@ -53,8 +66,10 @@ const Logo = styled.div`
 const Header = styled.header`
 	grid-area: header;
 	display: flex;
-	padding: 0 10rem;
+	padding: 0 3.2rem;
 	justify-content: space-between;
+	align-items: center;
+	box-shadow: rgba(0, 0, 0, 0.1) 0 0.1rem;
 `
 const Main = styled.main`
 	grid-area: main;
