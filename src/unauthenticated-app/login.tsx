@@ -1,8 +1,13 @@
 import { Form, Input } from 'antd'
 import { AuthForm, useAuth } from 'context/auth-context'
 import { LongButton } from 'unauthenticated-app'
+import { useAsync } from 'utils/use-async'
 
-export const LoginScreen = ({ value }: any) => {
+export const LoginScreen = ({
+	onError,
+}: {
+	onError: (error: Error) => void
+}) => {
 	const { login } = useAuth()
 	//这种使用 请求方式 + 请求的url地址的这种pathinfo模式形成的api，通常都叫做RESTFull风格的接口api。
 	//不符合RESTFull规范的api
@@ -18,10 +23,13 @@ export const LoginScreen = ({ value }: any) => {
 	// 		}
 	// 	})
 	// }
-
-	// HTMLFormElement extends Element
-	const handleSubmit = (values: AuthForm) => {
-		login(values)
+	const { run, isLoading } = useAsync(undefined, { throwOnError: true })
+	const handleSubmit = async (values: AuthForm) => {
+		try {
+			await run(login(values))
+		} catch (e) {
+			onError(e as Error)
+		}
 	}
 
 	return (
@@ -43,7 +51,12 @@ export const LoginScreen = ({ value }: any) => {
 				</Form.Item>
 			</div>
 			<div style={{ display: 'flex', justifyContent: 'space-between' }}>
-				<LongButton size="large" htmlType="submit" type={'primary'}>
+				<LongButton
+					loading={isLoading}
+					size="large"
+					htmlType="submit"
+					type={'primary'}
+				>
 					登录
 				</LongButton>
 			</div>

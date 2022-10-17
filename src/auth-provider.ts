@@ -22,7 +22,7 @@ export const login = (param: AuthForm) => {
 		if (res.ok) {
 			return handleUserResponse(await res.json())
 		} else {
-			return Promise.reject(param)
+			return Promise.reject(await res.json())
 		}
 	})
 }
@@ -38,7 +38,7 @@ export const register = (param: AuthForm) => {
 		if (res.ok) {
 			return handleUserResponse(await res.json())
 		} else {
-			return Promise.reject(param)
+			return Promise.reject(await res.json())
 		}
 	})
 }

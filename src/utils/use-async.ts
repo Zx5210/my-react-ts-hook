@@ -12,7 +12,16 @@ const defaultInitialState: State<null> = {
 	stat: 'idle',
 }
 
-export const useAsync = <D>(initialState?: State<D>) => {
+const defaultConfig = {
+	throwOnError: false,
+}
+
+export const useAsync = <D>(
+	initialState?: State<D>,
+	initialConfig?: typeof defaultConfig
+) => {
+	const config = { ...defaultConfig, ...initialConfig }
+
 	const [state, setState] = useState({
 		...defaultInitialState,
 		...initialState,
@@ -43,10 +52,13 @@ export const useAsync = <D>(initialState?: State<D>) => {
 				return data
 			})
 			.catch(error => {
+				// cath会消耗异常导致外部的try捕获不到
 				setError(error)
+				if (config.throwOnError) return Promise.reject(error)
 				return error
 			})
 	}
+	console.log(state)
 
 	return {
 		isIdle: state.stat === 'idle',

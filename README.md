@@ -49,3 +49,5 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 -hook 只能在组件或者其他 hook 中运行
 -hook 必须以 use 开头
+-State 的 setName 是异步的
+-Promise 的构建里面透视同步执行只有 then 和 cath 里面才会异步执行

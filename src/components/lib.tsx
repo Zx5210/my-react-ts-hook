@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { Spin, Typography } from 'antd'
 
 export const Row = styled.div<{
 	gap: number | boolean
@@ -20,3 +21,22 @@ export const Row = styled.div<{
 				: undefined};
 	}
 `
+const FullPage = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+`
+export const FullPageLoading = () => (
+	<FullPage>
+		<Spin size="large"></Spin>
+	</FullPage>
+)
+
+export const FullPageErrorFallback = ({ error }: { error: Error | null }) => (
+	<FullPage>
+		<Typography.Text type={'danger'}>
+			{error?.message || '系统错误！请联系管理员！'}
+		</Typography.Text>
+	</FullPage>
+)
