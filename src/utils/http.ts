@@ -47,7 +47,6 @@ export const http = async (
 //Parameters类型别名 Utility type 工具类型
 export const useHttp = () => {
 	const { user } = useAuth()
-
 	return (...[endpoint, config]: Parameters<typeof http>) =>
 		http(endpoint, { ...config, token: user?.token })
 }

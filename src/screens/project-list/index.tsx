@@ -2,7 +2,7 @@
 import { List } from './list'
 import { SearchPanel } from './search-panel'
 import { useState } from 'react'
-import { useDebounce } from 'utils'
+import { useDebounce, useDocumentTitle } from 'utils'
 import { Typography } from 'antd'
 import { useProject } from 'utils/project'
 import { useUser } from 'utils/user'
@@ -13,6 +13,7 @@ export const ProjectListScreen = () => {
 		name: '',
 		id: '',
 	})
+	useDocumentTitle('项目列表页', false)
 	//包裹一层防抖函数，传入修改的数值和防抖时间
 	const debouncedParam = useDebounce(param, 500)
 	const { isLoading, error, data: list } = useProject(debouncedParam)

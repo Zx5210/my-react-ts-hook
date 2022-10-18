@@ -51,3 +51,4 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 -hook 必须以 use 开头
 -State 的 setName 是异步的
 -Promise 的构建里面透视同步执行只有 then 和 cath 里面才会异步执行
+-react hook 与闭包的坑 因为 hook 初始化的时候执行的方法一直被保留着，没有更新掉所以不会触发值更新，所以要传入变化的值

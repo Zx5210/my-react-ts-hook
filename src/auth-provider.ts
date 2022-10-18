@@ -45,5 +45,4 @@ export const register = (param: AuthForm) => {
 
 export const logout = async () => {
 	window.localStorage.removeItem(localStorageKey)
-	window.location.reload()
 }

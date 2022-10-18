@@ -8,6 +8,16 @@ import { useAuth } from 'context/auth-context'
 
 export const AuthenticatedApp = () => {
 	const { user, logout } = useAuth()
+	const menu = (
+		<Menu
+			items={[
+				{
+					label: <a onClick={logout}>登出</a>,
+					key: 'logout',
+				},
+			]}
+		/>
+	)
 	return (
 		<Container>
 			<Header>
@@ -17,15 +27,7 @@ export const AuthenticatedApp = () => {
 					<h2>苗圃</h2>
 				</HeaderLeft>
 				<HeaderRight>
-					<Dropdown
-						overlay={
-							<Menu>
-								<Menu.Item key={'logout'}>
-									<a onClick={logout}>登出</a>
-								</Menu.Item>
-							</Menu>
-						}
-					>
+					<Dropdown overlay={menu}>
 						<a onClick={e => e.preventDefault()}>Hi,{user?.name}</a>
 					</Dropdown>
 				</HeaderRight>

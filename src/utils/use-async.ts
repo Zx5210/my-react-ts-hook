@@ -58,7 +58,6 @@ export const useAsync = <D>(
 				return error
 			})
 	}
-	console.log(state)
 
 	return {
 		isIdle: state.stat === 'idle',

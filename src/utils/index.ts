@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export const isFalsy = (val: unknown): boolean => (val === 0 ? false : !val)
 
@@ -16,7 +16,7 @@ export const cleanObject = (obj: { [key: string]: unknown }) => {
 	return result
 }
 
-// useMount
+// useMount 挂载出发函数
 export const useMount = (callback: () => void) => {
 	useEffect(() => {
 		callback()
@@ -39,6 +39,7 @@ export const useMount = (callback: () => void) => {
 // 	}
 // }
 // 使用hook修改debounce
+// hook防抖函数
 export const useDebounce = <T>(value: T, delay?: number): T => {
 	// 接收参数后创建新的useStata
 	const [debouncedValue, setDebouncedValue] = useState(value)
@@ -52,4 +53,21 @@ export const useDebounce = <T>(value: T, delay?: number): T => {
 		return () => clearTimeout(timeout)
 	}, [value, delay])
 	return debouncedValue
+}
+
+export const useDocumentTitle = (title: string, keepOnUnmount: boolean) => {
+	const oldTitle = useRef(document.title).current
+
+	useEffect(() => {
+		document.title = title
+	}, [title])
+
+	useEffect(() => {
+		return () => {
+			console.log(keepOnUnmount, oldTitle)
+			if (!keepOnUnmount) {
+				document.title = oldTitle
+			}
+		}
+	}, [keepOnUnmount, oldTitle])
 }

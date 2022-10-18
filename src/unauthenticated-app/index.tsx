@@ -8,8 +8,10 @@ import left from 'assets/left1.png'
 import right from 'assets/right1.png'
 import logo from 'assets/logo.png'
 import cardbg from 'assets/cardbg.png'
+import { useDocumentTitle } from 'utils'
 
 export const UnauthenticatedApp = () => {
+	// useDocumentTitle('登录与注册', false)
 	const [isRegister, setIsRegister] = useState(false)
 	const [error, setError] = useState<Error | null>(null)
 	return (
