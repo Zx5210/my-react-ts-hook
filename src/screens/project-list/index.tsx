@@ -10,18 +10,17 @@ import styled from '@emotion/styled'
 import { useUrlQueryParam } from 'utils/url'
 
 export const ProjectListScreen = () => {
-	const [param, setParam] = useState({
+	const [, setParam] = useState({
 		name: '',
 		id: '',
 	})
 	useDocumentTitle('项目列表页', false)
+	// 基本类型可以放到依赖里；组件状态可以放；非组件状态的对象不能放进依赖里
+	const [param] = useUrlQueryParam(['name', 'id'])
 	//包裹一层防抖函数，传入修改的数值和防抖时间
 	const debouncedParam = useDebounce(param, 500)
 	const { isLoading, error, data: list } = useProject(debouncedParam)
 	const { data: users } = useUser()
-
-	const seachParam = useUrlQueryParam(['name'])
-	console.log(seachParam)
 
 	return (
 		<Container>
