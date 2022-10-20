@@ -7,6 +7,7 @@ import { Typography } from 'antd'
 import { useProject } from 'utils/project'
 import { useUser } from 'utils/user'
 import styled from '@emotion/styled'
+import { useUrlQueryParam } from 'utils/url'
 
 export const ProjectListScreen = () => {
 	const [param, setParam] = useState({
@@ -18,6 +19,9 @@ export const ProjectListScreen = () => {
 	const debouncedParam = useDebounce(param, 500)
 	const { isLoading, error, data: list } = useProject(debouncedParam)
 	const { data: users } = useUser()
+
+	const seachParam = useUrlQueryParam(['name'])
+	console.log(seachParam)
 
 	return (
 		<Container>
