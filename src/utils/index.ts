@@ -64,10 +64,11 @@ export const useDocumentTitle = (title: string, keepOnUnmount: boolean) => {
 
 	useEffect(() => {
 		return () => {
-			console.log(keepOnUnmount, oldTitle)
 			if (!keepOnUnmount) {
 				document.title = oldTitle
 			}
 		}
 	}, [keepOnUnmount, oldTitle])
 }
+
+export const restRoute = () => (window.location.href = window.location.origin)

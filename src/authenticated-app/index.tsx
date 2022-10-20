@@ -5,8 +5,37 @@ import { Dropdown, Menu } from 'antd'
 import { ProjectListScreen } from 'screens/project-list'
 import { Row } from 'components/lib'
 import { useAuth } from 'context/auth-context'
+import { Route, Routes, Navigate } from 'react-router'
+import { BrowserRouter as Router } from 'react-router-dom'
+import { ProjectScreen } from 'screens/project'
+import { restRoute } from 'utils'
 
 export const AuthenticatedApp = () => {
+	return (
+		<Container>
+			<PageHeader />
+			<Nav>Nav</Nav>
+			<Main>
+				<Router>
+					<Routes>
+						<Route
+							path="*"
+							element={<Navigate to="/projects" replace={true} />}
+						/>
+						<Route path={'/projects'} element={<ProjectListScreen />} />
+						<Route
+							path={'/projects/:projectId/*'}
+							element={<ProjectScreen />}
+						/>
+					</Routes>
+				</Router>
+			</Main>
+			<Aside>Aside</Aside>
+			<Footer>Footer</Footer>
+		</Container>
+	)
+}
+const PageHeader = () => {
 	const { user, logout } = useAuth()
 	const menu = (
 		<Menu
@@ -19,28 +48,24 @@ export const AuthenticatedApp = () => {
 		/>
 	)
 	return (
-		<Container>
-			<Header>
-				<HeaderLeft gap={true} between={true} weight={true}>
+		<Header>
+			<HeaderLeft gap={true} between={true} weight={true}>
+				<a type={'link'} onClick={restRoute}>
 					<Logo>雨林</Logo>
-					<h2>花园</h2>
-					<h2>苗圃</h2>
-				</HeaderLeft>
-				<HeaderRight>
-					<Dropdown overlay={menu}>
-						<a onClick={e => e.preventDefault()}>Hi,{user?.name}</a>
-					</Dropdown>
-				</HeaderRight>
-			</Header>
-			<Nav>Nav</Nav>
-			<Main>
-				<ProjectListScreen />
-			</Main>
-			<Aside>Aside</Aside>
-			<Footer>Footer</Footer>
-		</Container>
+				</a>
+
+				<h2>花园</h2>
+				<h2>苗圃</h2>
+			</HeaderLeft>
+			<HeaderRight>
+				<Dropdown overlay={menu}>
+					<a onClick={e => e.preventDefault()}>Hi,{user?.name}</a>
+				</Dropdown>
+			</HeaderRight>
+		</Header>
 	)
 }
+
 const Container = styled.div`
 	display: grid;
 	height: 100vh;
