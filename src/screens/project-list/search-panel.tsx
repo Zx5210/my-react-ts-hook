@@ -1,35 +1,32 @@
 /* @jsxImportSource @emotion/react */
-import { Form, Input, Select } from 'antd'
+import { Form, Input } from 'antd'
+import { UseSelect } from 'components/user-select'
+import { Project } from './list'
 
 export interface User {
-	id: string
+	id: number
 	name: string
 	token: string
 }
+// Pick引入Project类型接口取nama和id给param
 interface SearchPanelProps {
 	users: User[]
-	param: { name: string; id: string }
+	param: Partial<Pick<Project, 'name' | 'id'>>
 	setParam: (param: SearchPanelProps['param']) => void
 }
 export const SearchPanel = ({ users, param, setParam }: SearchPanelProps) => {
-	const { Option } = Select
 	const selectAfter = (
-		<Select
-			defaultValue={param.id}
+		<UseSelect
+			defaultOptionName={'负责人'}
+			options={users}
+			value={users.length ? param.id : undefined}
 			onChange={id =>
 				setParam({
 					...param,
 					id,
 				})
 			}
-		>
-			<Option value={''}>负责人</Option>
-			{users.map(user => (
-				<Option key={user.id} value={user.id}>
-					{user.name}
-				</Option>
-			))}
-		</Select>
+		></UseSelect>
 	)
 	return (
 		<Form css={{ width: '30rem', marginBottom: '2rem' }}>

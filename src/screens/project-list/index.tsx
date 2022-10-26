@@ -6,15 +6,14 @@ import { Typography } from 'antd'
 import { useProject } from 'utils/project'
 import { useUser } from 'utils/user'
 import styled from '@emotion/styled'
-import { useUrlQueryParam } from 'utils/url'
+import { useProjectsSearchParams } from './util'
 
 export const ProjectListScreen = () => {
-	const [param, setParam] = useUrlQueryParam(['name', 'id'])
 	useDocumentTitle('项目列表页', false)
+	const [param, setParam] = useProjectsSearchParams()
 	// 基本类型可以放到依赖里；组件状态可以放；非组件状态的对象不能放进依赖里
 	//包裹一层防抖函数，传入修改的数值和防抖时间
-	const debouncedParam = useDebounce(param, 500)
-	const { isLoading, error, data: list } = useProject(debouncedParam)
+	const { isLoading, error, data: list } = useProject(useDebounce(param, 500))
 	const { data: users } = useUser()
 
 	return (
