@@ -11,6 +11,7 @@ export const Pin = (props: PinProps) => {
 		<Rate
 			count={1}
 			value={checked ? 1 : 0}
+			style={{ color: '#faad14' }}
 			onChange={pin => {
 				onCheckedChange?.(pin)
 			}}

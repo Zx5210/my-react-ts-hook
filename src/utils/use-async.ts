@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
+import { useMounteRef } from 'utils'
 
 interface State<D> {
 	data: D
@@ -27,37 +28,50 @@ export const useAsync = <D>(
 		...initialState,
 	})
 
-	const setData = (data: D) =>
-		setState({
-			data,
-			stat: 'success',
-			error: null,
-		})
+	const setData = useCallback(
+		(data: D) =>
+			setState({
+				data,
+				stat: 'success',
+				error: null,
+			}),
+		[]
+	)
 
-	const setError = (error: Error) =>
-		setState({
-			error,
-			stat: 'error',
-			data: null,
-		})
-
-	const run = (promise: Promise<D>) => {
-		if (!promise || !promise.then) {
-			throw new Error('请传入一个Promise')
-		}
-		setState({ ...state, stat: 'loading' })
-		return promise
-			.then(data => {
-				setData(data)
-				return data
+	const setError = useCallback(
+		(error: Error) =>
+			setState({
+				error,
+				stat: 'error',
+				data: null,
+			}),
+		[]
+	)
+	const [retry, setRetry] = useState(() => () => {})
+	const mounteRef = useMounteRef()
+	const run = useCallback(
+		(promise: Promise<D>, runConfig?: { retry: () => Promise<D> }) => {
+			if (!promise || !promise.then) {
+				throw new Error('请传入一个Promise')
+			}
+			setRetry(() => () => {
+				if (runConfig?.retry) run(runConfig?.retry(), runConfig)
 			})
-			.catch(error => {
-				// cath会消耗异常导致外部的try捕获不到
-				setError(error)
-				if (config.throwOnError) return Promise.reject(error)
-				return error
-			})
-	}
+			setState(prevState => ({ ...prevState, stat: 'loading' }))
+			return promise
+				.then(data => {
+					if (mounteRef.current) setData(data)
+					return data
+				})
+				.catch(error => {
+					// cath会消耗异常导致外部的try捕获不到
+					setError(error)
+					if (config.throwOnError) return Promise.reject(error)
+					return error
+				})
+		},
+		[config.throwOnError, mounteRef, setData, setError]
+	)
 
 	return {
 		isIdle: state.stat === 'idle',
@@ -65,6 +79,7 @@ export const useAsync = <D>(
 		isError: state.stat === 'error',
 		isSuccess: state.stat === 'success',
 		run,
+		retry,
 		setData,
 		setError,
 		...state,

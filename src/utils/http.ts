@@ -1,6 +1,7 @@
 import { logout } from 'auth-provider'
 import { useAuth } from 'context/auth-context'
 import qs from 'qs'
+import { useCallback } from 'react'
 
 interface Config extends RequestInit {
 	token?: string
@@ -47,6 +48,9 @@ export const http = async (
 //Parameters类型别名 Utility type 工具类型
 export const useHttp = () => {
 	const { user } = useAuth()
-	return (...[endpoint, config]: Parameters<typeof http>) =>
-		http(endpoint, { ...config, token: user?.token })
+	return useCallback(
+		(...[endpoint, config]: Parameters<typeof http>) =>
+			http(endpoint, { ...config, token: user?.token }),
+		[user?.token]
+	)
 }

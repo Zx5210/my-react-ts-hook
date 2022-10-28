@@ -13,7 +13,12 @@ export const ProjectListScreen = () => {
 	const [param, setParam] = useProjectsSearchParams()
 	// 基本类型可以放到依赖里；组件状态可以放；非组件状态的对象不能放进依赖里
 	//包裹一层防抖函数，传入修改的数值和防抖时间
-	const { isLoading, error, data: list } = useProject(useDebounce(param, 500))
+	const {
+		isLoading,
+		error,
+		data: list,
+		retry,
+	} = useProject(useDebounce(param, 500))
 	const { data: users } = useUser()
 
 	return (
@@ -23,7 +28,12 @@ export const ProjectListScreen = () => {
 			{error ? (
 				<Typography.Text type={'danger'}>{error.message}</Typography.Text>
 			) : null}
-			<List loading={isLoading} list={list || []} users={users || []} />
+			<List
+				refresh={retry}
+				loading={isLoading}
+				list={list || []}
+				users={users || []}
+			/>
 		</Container>
 	)
 }

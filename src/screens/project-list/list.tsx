@@ -16,11 +16,12 @@ export interface Project {
 interface ListPriject extends TableProps<Project> {
 	list: Project[]
 	users: User[]
+	refresh?: () => void
 }
-export const List = ({ list, users, ...props }: ListPriject) => {
+export const List = ({ list, users, refresh, ...props }: ListPriject) => {
 	const { mutate } = useEditProject()
 	const pinProject = (project: Project) => (pin: number) =>
-		mutate({ ...project, pin })
+		mutate({ ...project, pin }).then(refresh)
 	const columns = [
 		{
 			title: <Pin checked={true} disabled={true}></Pin>,
