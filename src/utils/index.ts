@@ -72,3 +72,15 @@ export const useDocumentTitle = (title: string, keepOnUnmount: boolean) => {
 }
 
 export const restRoute = () => (window.location.href = window.location.origin)
+
+// 如果组件销毁了那么发出的异步请求返回后就不应该再执行
+export const useMounteRef = () => {
+	const mounteRef = useRef(false)
+	useEffect(() => {
+		mounteRef.current = true
+		return () => {
+			mounteRef.current = false
+		}
+	})
+	return mounteRef
+}

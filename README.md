@@ -52,4 +52,7 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 -State 的 setName 是异步的
 -Promise 的构建里面透视同步执行只有 then 和 cath 里面才会异步执行
 -react hook 与闭包的坑 因为 hook 初始化的时候执行的方法一直被保留着，没有更新掉所以不会触发值更新，所以要传入变化的值 hook 的 retun 清理副作用只有在组件销毁和依赖修改的时候触发
--useMemo 避免高开销，循环执行
+-useMemo 避免高开销，阻止循循环执行，hook 中然会新对象的时候使用避免每次都是新的引用地址从而死循环
+-## 柯里化函数式编程函数的连续返回新的函数
+-useState 中传入函数会被 react 认为是惰性初始 state 会在初始的时候直接调用，会触发组件渲染
+-useRef 不是组件状态不会触发组件只是一个变量不会触发组件渲染需要执行 current 不能拿到最新的数据需要执行 current()才行

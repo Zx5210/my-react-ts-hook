@@ -14,3 +14,31 @@ export const useProject = (param?: Partial<Project>) => {
 	}, [param])
 	return result
 }
+
+export const useEditProject = () => {
+	const { run, ...asyncResult } = useAsync()
+	const client = useHttp()
+	const mutate = (params: Partial<Project>) => {
+		return run(
+			client(`projects/${params.id}`, {
+				data: params,
+				method: 'PUT',
+			})
+		)
+	}
+	return { mutate, ...asyncResult }
+}
+
+export const useAddProject = () => {
+	const { run, ...asyncResult } = useAsync()
+	const client = useHttp()
+	const mutate = (params: Partial<Project>) => {
+		return run(
+			client(`projects/${params.id}`, {
+				data: params,
+				method: 'PUT',
+			})
+		)
+	}
+	return { mutate, ...asyncResult }
+}
