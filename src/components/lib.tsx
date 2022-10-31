@@ -1,10 +1,11 @@
 import styled from '@emotion/styled'
-import { Spin, Typography } from 'antd'
+import { Button, Spin, Typography } from 'antd'
 
 export const Row = styled.div<{
-	gap: number | boolean
-	between: boolean
-	weight: boolean
+	gap?: number | boolean
+	between?: boolean
+	weight?: boolean
+	bottom?: number | boolean
 }>`
 	display: flex;
 	align-items: center;
@@ -12,7 +13,12 @@ export const Row = styled.div<{
 	> * {
 		font-weight: ${props => (props.weight ? 'bold' : undefined)};
 		margin-top: 0 !important;
-		margin-bottom: 0 !important;
+		margin-bottom: ${props =>
+			typeof props.bottom === 'number'
+				? props.bottom + 'rem'
+				: props.bottom
+				? '2rem'
+				: undefined};
 		margin-right: ${props =>
 			typeof props.gap === 'number'
 				? props.gap + 'rem'
@@ -40,3 +46,7 @@ export const FullPageErrorFallback = ({ error }: { error: Error | null }) => (
 		</Typography.Text>
 	</FullPage>
 )
+
+export const ButtonNOPadding = styled(Button)`
+	padding: initial;
+`

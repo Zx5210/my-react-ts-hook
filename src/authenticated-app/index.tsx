@@ -3,17 +3,32 @@ import styled from '@emotion/styled'
 import logo from 'assets/logo.png'
 import { Dropdown, Menu } from 'antd'
 import { ProjectListScreen } from 'screens/project-list'
-import { Row } from 'components/lib'
+import { ButtonNOPadding, Row } from 'components/lib'
 import { useAuth } from 'context/auth-context'
 import { Route, Routes, Navigate } from 'react-router'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { ProjectScreen } from 'screens/project'
 import { restRoute } from 'utils'
+import { ProjectModal } from 'components/project-modal'
+import { useState } from 'react'
+import { ProjectPopover } from 'components/project-popover'
 
 export const AuthenticatedApp = () => {
+	const [projectModalOpen, setProjectModalOpen] = useState(false)
+	const projectButton = (
+		<ButtonNOPadding
+			type={'link'}
+			onClick={() => {
+				setProjectModalOpen(true)
+			}}
+		>
+			种植植被
+		</ButtonNOPadding>
+	)
+
 	return (
 		<Container>
-			<PageHeader />
+			<PageHeader projectButton={projectButton} />
 			<Nav>Nav</Nav>
 			<Main>
 				<Router>
@@ -22,7 +37,10 @@ export const AuthenticatedApp = () => {
 							path="*"
 							element={<Navigate to="/projects" replace={true} />}
 						/>
-						<Route path={'/projects'} element={<ProjectListScreen />} />
+						<Route
+							path={'/projects'}
+							element={<ProjectListScreen projectButton={projectButton} />}
+						/>
 						<Route
 							path={'/projects/:projectId/*'}
 							element={<ProjectScreen />}
@@ -32,10 +50,14 @@ export const AuthenticatedApp = () => {
 			</Main>
 			<Aside>Aside</Aside>
 			<Footer>Footer</Footer>
+			<ProjectModal
+				projectMoadlOpen={projectModalOpen}
+				onClose={() => setProjectModalOpen(false)}
+			></ProjectModal>
 		</Container>
 	)
 }
-const PageHeader = () => {
+const PageHeader = (props: { projectButton: JSX.Element }) => {
 	const { user, logout } = useAuth()
 	const menu = (
 		<Menu
@@ -49,13 +71,12 @@ const PageHeader = () => {
 	)
 	return (
 		<Header>
-			<HeaderLeft gap={true} between={true} weight={true}>
+			<HeaderLeft gap={true} between={true} weight={false}>
 				<a type={'link'} onClick={restRoute}>
 					<Logo>雨林</Logo>
 				</a>
-
-				<h2>花园</h2>
-				<h2>苗圃</h2>
+				<ProjectPopover {...props} />
+				<span>苗圃</span>
 			</HeaderLeft>
 			<HeaderRight>
 				<Dropdown overlay={menu}>
@@ -79,11 +100,15 @@ const Container = styled.div`
 `
 const HeaderLeft = styled(Row)`
 	color: #333;
+	span {
+		font-size: 2rem;
+	}
 `
 const HeaderRight = styled.div``
 const Logo = styled.div`
 	color: #fff;
 	font-size: 4rem;
+	font-weight: bold;
 	width: 15rem;
 	text-align: center;
 	background: url(${logo}) no-repeat center;

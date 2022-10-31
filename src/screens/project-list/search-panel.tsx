@@ -29,7 +29,7 @@ export const SearchPanel = ({ users, param, setParam }: SearchPanelProps) => {
 		></UseSelect>
 	)
 	return (
-		<Form css={{ width: '30rem', marginBottom: '2rem' }}>
+		<Form css={{ width: '30rem' }}>
 			<Input
 				defaultValue={param.name}
 				addonAfter={selectAfter}
