@@ -47,8 +47,11 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 ### hook
 
+-# 这种使用 请求方式 + 请求的 url 地址的这种 pathinfo 模式形成的 api，通常都叫做 RESTFull 风格的接口 api。
+-# 不符合 RESTFull 规范的 api
 -hook 只能在组件或者其他 hook 中运行
 -hook 必须以 use 开头
+-# 判断什么时候使用 hook 什么时候使用函数，看函数里面需不需要使用 hook，如果不需要就当函数需要就用 hook 需要使用 hook 就需要把自己也变化 hook
 -State 的 setName 是异步的
 -Promise 的构建里面透视同步执行只有 then 和 cath 里面才会异步执行
 -react hook 与闭包的坑 因为 hook 初始化的时候执行的方法一直被保留着，没有更新掉所以不会触发值更新，所以要传入变化的值 hook 的 retun 清理副作用只有在组件销毁和依赖修改的时候触发
@@ -59,3 +62,6 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 -const let 初始化会放到暂时性死区里面
 -component composition 解决组件解耦的问题可以减少传递 props 的属性
 -# 控制反转 把传统的控制从主动的变为被动的 这样的好处就是子组件不需要知道复杂的逻辑 只要渲染就好了
+-hook 的出现是为了解决高阶组件的嵌套和操作难以理解的问题
+-# 同步函数是可以预测的异步函数是一个副作用
+-# redux-thunk 异步处理库 applyMiddleware 中间件 redux-thunk 最大的作用是使异步处理变得更友好不需要关注异步的细节，可以拦截异步并处理返回处理
