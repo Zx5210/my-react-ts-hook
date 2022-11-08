@@ -25,3 +25,13 @@ export const useUrlQueryParam = <K extends string>(keys: K[]) => {
 		},
 	] as const
 }
+
+export const useProjectModal = () => {
+	const [{ projectCreate }, setProjectModalOpen] = useUrlQueryParam([
+		'projectCreate',
+	])
+	const open = () => setProjectModalOpen({ projectCreate: true })
+	const close = () => setProjectModalOpen({ projectCreate: undefined })
+
+	return { projectMoadlOpen: projectCreate === 'true', close, open } as const
+}

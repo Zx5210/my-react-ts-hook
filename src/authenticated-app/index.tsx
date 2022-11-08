@@ -3,61 +3,43 @@ import styled from '@emotion/styled'
 import logo from 'assets/logo.png'
 import { Dropdown, Menu } from 'antd'
 import { ProjectListScreen } from 'screens/project-list'
-import { ButtonNOPadding, Row } from 'components/lib'
+import { Row } from 'components/lib'
 import { useAuth } from 'context/auth-context'
 import { Route, Routes, Navigate } from 'react-router'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { ProjectScreen } from 'screens/project'
 import { restRoute } from 'utils'
 import { ProjectModal } from 'components/project-modal'
-import { useState } from 'react'
 import { ProjectPopover } from 'components/project-popover'
 
 export const AuthenticatedApp = () => {
-	const [projectModalOpen, setProjectModalOpen] = useState(false)
-	const projectButton = (
-		<ButtonNOPadding
-			type={'link'}
-			onClick={() => {
-				setProjectModalOpen(true)
-			}}
-		>
-			种植植被
-		</ButtonNOPadding>
-	)
-
 	return (
 		<Container>
-			<PageHeader projectButton={projectButton} />
-			<Nav>Nav</Nav>
-			<Main>
-				<Router>
+			<Router>
+				<PageHeader />
+				<Nav>Nav</Nav>
+
+				<Main>
 					<Routes>
 						<Route
 							path="*"
 							element={<Navigate to="/projects" replace={true} />}
 						/>
-						<Route
-							path={'/projects'}
-							element={<ProjectListScreen projectButton={projectButton} />}
-						/>
+						<Route path={'/projects'} element={<ProjectListScreen />} />
 						<Route
 							path={'/projects/:projectId/*'}
 							element={<ProjectScreen />}
 						/>
 					</Routes>
-				</Router>
-			</Main>
-			<Aside>Aside</Aside>
-			<Footer>Footer</Footer>
-			<ProjectModal
-				projectMoadlOpen={projectModalOpen}
-				onClose={() => setProjectModalOpen(false)}
-			></ProjectModal>
+				</Main>
+				<Aside>Aside</Aside>
+				<Footer>Footer</Footer>
+				<ProjectModal />
+			</Router>
 		</Container>
 	)
 }
-const PageHeader = (props: { projectButton: JSX.Element }) => {
+const PageHeader = () => {
 	const { user, logout } = useAuth()
 	const menu = (
 		<Menu
@@ -75,7 +57,7 @@ const PageHeader = (props: { projectButton: JSX.Element }) => {
 				<a type={'link'} onClick={restRoute}>
 					<Logo>雨林</Logo>
 				</a>
-				<ProjectPopover {...props} />
+				<ProjectPopover />
 				<span>苗圃</span>
 			</HeaderLeft>
 			<HeaderRight>
