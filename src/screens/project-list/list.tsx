@@ -1,9 +1,11 @@
-import { Table, TableProps } from 'antd'
+import { Button, Dropdown, Menu, Table, TableProps } from 'antd'
 import dayjs from 'dayjs'
 import { User } from './search-panel'
 import { Link } from 'react-router-dom'
 import { Pin } from 'components/pin'
 import { useEditProject } from 'utils/project'
+import { ButtonNOPadding } from 'components/lib'
+import { useProjectModal } from './util'
 
 export interface Project {
 	id: number
@@ -16,12 +18,15 @@ export interface Project {
 interface ListPriject extends TableProps<Project> {
 	list: Project[]
 	users: User[]
-	refresh?: () => void
 }
-export const List = ({ list, users, refresh, ...props }: ListPriject) => {
+export const List = ({ list, users, ...props }: ListPriject) => {
 	const { mutate } = useEditProject()
+	const { startEdit } = useProjectModal()
+
 	const pinProject = (project: Project) => (pin: number) =>
-		mutate({ ...project, pin }).then(refresh)
+		mutate({ ...project, pin })
+	const editProject = (id: number) => () => startEdit(id)
+
 	const columns = [
 		{
 			title: <Pin checked={true} disabled={true}></Pin>,
@@ -65,7 +70,37 @@ export const List = ({ list, users, refresh, ...props }: ListPriject) => {
 				)
 			},
 		},
+		{
+			title: '操作',
+			render(value: string, project: Project) {
+				return (
+					<Dropdown overlay={menu(project)}>
+						<ButtonNOPadding type={'link'}>···</ButtonNOPadding>
+					</Dropdown>
+				)
+			},
+		},
 	]
+
+	const menu = (project: Project) => (
+		<Menu
+			items={[
+				{
+					label: (
+						<Button type={'link'} onClick={editProject(project.id)}>
+							编辑
+						</Button>
+					),
+					key: 'edit',
+				},
+				{
+					label: <Button type={'link'}>删除</Button>,
+					key: 'del',
+				},
+			]}
+		/>
+	)
+
 	return (
 		<Table
 			rowKey={record => record.id}

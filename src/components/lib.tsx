@@ -41,12 +41,20 @@ export const FullPageLoading = () => (
 
 export const FullPageErrorFallback = ({ error }: { error: Error | null }) => (
 	<FullPage>
-		<Typography.Text type={'danger'}>
-			{error?.message || '系统错误！请联系管理员！'}
-		</Typography.Text>
+		<ErrorBox error={error} />
 	</FullPage>
 )
 
 export const ButtonNOPadding = styled(Button)`
 	padding: initial;
 `
+
+export const ErrorBox = ({ error }: { error: Error | unknown }) => {
+	//类型守卫 如果返回值等于true的时候value就是一个Error类型
+	const isError = (value: any): value is Error => value?.message
+
+	if (isError(error)) {
+		return <Typography.Text type={'danger'}>{error.message}</Typography.Text>
+	}
+	return null
+}

@@ -1,33 +1,43 @@
-import { useCallback, useEffect } from 'react'
 import { Project } from 'screens/project-list/list'
-import { cleanObject } from 'utils'
 import { useHttp } from './http'
-import { useAsync } from './use-async'
+import { useQuery, useMutation, useQueryClient } from 'react-query'
 
-export const useProject = (param?: Partial<Project>) => {
+export const useProjects = (param?: Partial<Project>) => {
 	const client = useHttp()
-	const { run, ...result } = useAsync<Project[]>()
-	const { id, name } = cleanObject(param || {})
-	const fetchProjects = useCallback(
-		() => client('projects', { data: { ceartNameId: id, name } }),
-		[client, id, name]
+	return useQuery(['projects', param], () =>
+		client('projects', { data: param })
 	)
-	useEffect(() => {
-		run(fetchProjects(), { retry: fetchProjects })
-	}, [fetchProjects, param, run])
-	return result
 }
 
 export const useEditProject = () => {
-	const { run, ...asyncResult } = useAsync()
 	const client = useHttp()
-	const mutate = (params: Partial<Project>) => {
-		return run(
-			client(`projects/${params.id}`, {
-				data: params,
-				method: 'PUT',
-			})
-		)
-	}
-	return { mutate, ...asyncResult }
+	const queryClient = useQueryClient()
+	return useMutation(
+		(params: Partial<Project>) =>
+			client(`projects/${params.id}`, { data: params, method: 'PUT' }),
+		{
+			// 如果请求成功就把projects数据置为失效让他重新请求
+			onSuccess: () => queryClient.invalidateQueries('projects'),
+		}
+	)
+}
+
+export const useAddProject = () => {
+	const client = useHttp()
+	const queryClient = useQueryClient()
+	return useMutation(
+		(params: Partial<Project>) =>
+			client(`projects`, { data: params, method: 'post' }),
+		{
+			// 如果请求成功就把projects数据置为失效让他重新请求
+			onSuccess: () => queryClient.invalidateQueries('projects'),
+		}
+	)
+}
+
+export const useProject = (id: Number) => {
+	const client = useHttp()
+	return useQuery(['project', { id }], () => client(`projects/${id}`), {
+		enabled: !!id,
+	})
 }

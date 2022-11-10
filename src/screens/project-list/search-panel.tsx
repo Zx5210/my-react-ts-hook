@@ -18,7 +18,6 @@ export const SearchPanel = ({ users, param, setParam }: SearchPanelProps) => {
 	const selectAfter = (
 		<UseSelect
 			defaultOptionName={'负责人'}
-			options={users}
 			value={users.length ? param.id : undefined}
 			onChange={id =>
 				setParam({

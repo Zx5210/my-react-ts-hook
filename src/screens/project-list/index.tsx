@@ -1,14 +1,13 @@
 /* @jsxImportSource @emotion/react */
 import { List } from './list'
 import { SearchPanel } from './search-panel'
-import { useDebounce, useDocumentTitle } from 'utils'
-import { Button, Typography } from 'antd'
-import { useProject } from 'utils/project'
-import { useUser } from 'utils/user'
+import { cleanObject, useDebounce, useDocumentTitle } from 'utils'
+import { Button } from 'antd'
+import { useProjects } from 'utils/project'
+import { useUsers } from 'utils/user'
 import styled from '@emotion/styled'
-import { useProjectsSearchParams } from './util'
-import { Row } from 'components/lib'
-import { useProjectModal } from 'utils/url'
+import { useProjectModal, useProjectsSearchParams } from './util'
+import { ErrorBox, Row } from 'components/lib'
 
 export const ProjectListScreen = () => {
 	useDocumentTitle('项目列表页', false)
@@ -20,9 +19,8 @@ export const ProjectListScreen = () => {
 		isLoading,
 		error,
 		data: list,
-		retry,
-	} = useProject(useDebounce(param, 500))
-	const { data: users } = useUser()
+	} = useProjects(cleanObject(useDebounce(param, 500)))
+	const { data: users } = useUsers()
 
 	return (
 		<Container>
@@ -31,15 +29,8 @@ export const ProjectListScreen = () => {
 				<SearchPanel users={users || []} param={param} setParam={setParam} />
 				<Button onClick={open}>种植</Button>
 			</Row>
-			{error ? (
-				<Typography.Text type={'danger'}>{error.message}</Typography.Text>
-			) : null}
-			<List
-				refresh={retry}
-				loading={isLoading}
-				list={list || []}
-				users={users || []}
-			/>
+			{error ? <ErrorBox error={error} /> : null}
+			<List loading={isLoading} list={list || []} users={users || []} />
 		</Container>
 	)
 }

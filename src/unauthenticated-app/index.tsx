@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import styled from '@emotion/styled'
-import { Button, Card, Divider, Typography } from 'antd'
+import { Button, Card, Divider } from 'antd'
 import { useState } from 'react'
 import { LoginScreen } from './login'
 import { RegisterScreen } from './register'
@@ -9,6 +9,7 @@ import right from 'assets/right1.png'
 import logo from 'assets/logo.png'
 import cardbg from 'assets/cardbg.png'
 import { useDocumentTitle } from 'utils'
+import { ErrorBox } from 'components/lib'
 
 export const UnauthenticatedApp = () => {
 	useDocumentTitle('登录与注册', false)
@@ -20,9 +21,7 @@ export const UnauthenticatedApp = () => {
 			<Background />
 			<ShadowCard>
 				<Title>{isRegister ? '请注册' : '请登录'}</Title>
-				{error ? (
-					<Typography.Text type={'danger'}>{error.message} </Typography.Text>
-				) : null}
+				{error ? <ErrorBox error={error} /> : null}
 				{isRegister ? (
 					<RegisterScreen onError={setError} />
 				) : (

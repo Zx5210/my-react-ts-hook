@@ -9,10 +9,10 @@ interface IdSelectProps
 		SelectProps,
 		'value' | 'onChange' | 'defaultOptionName' | 'options'
 	> {
-	value: Raw | null | undefined
-	onChange: (value?: number) => void
+	value?: Raw | null | undefined
+	onChange?: (value?: number) => void
 	defaultOptionName?: string
-	options: { name: string; id: number }[]
+	options?: { name: string; id: number }[]
 }
 
 const toNumber = (value: unknown) => (isNaN(Number(value)) ? 0 : Number(value))
@@ -29,7 +29,7 @@ export const IdSelset = (props: IdSelectProps) => {
 	return (
 		<Select
 			value={toNumber(value)}
-			onChange={value => onChange(toNumber(value) || undefined)}
+			onChange={value => onChange?.(toNumber(value) || undefined)}
 		>
 			{defaultOptionName ? (
 				<Select.Option value={0}>{defaultOptionName}</Select.Option>

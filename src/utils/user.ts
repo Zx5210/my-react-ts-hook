@@ -3,7 +3,7 @@ import { User } from 'screens/project-list/search-panel'
 import { useHttp } from './http'
 import { useAsync } from './use-async'
 
-export const useUser = () => {
+export const useUsers = () => {
 	const { run, ...result } = useAsync<User[]>()
 	const client = useHttp()
 	useEffect(() => {
