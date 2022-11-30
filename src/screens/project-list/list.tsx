@@ -1,9 +1,9 @@
-import { Button, Dropdown, Menu, Table, TableProps } from 'antd'
+import { Button, Dropdown, Menu, Modal, Table, TableProps } from 'antd'
 import dayjs from 'dayjs'
 import { User } from './search-panel'
 import { Link } from 'react-router-dom'
 import { Pin } from 'components/pin'
-import { useEditProject } from 'utils/project'
+import { useEditProject, useDeleteProject } from 'utils/project'
 import { ButtonNOPadding } from 'components/lib'
 import { useProjectModal, useProjectsQueryKey } from './util'
 
@@ -20,12 +20,24 @@ interface ListPriject extends TableProps<Project> {
 	users: User[]
 }
 export const List = ({ list, users, ...props }: ListPriject) => {
-	const { mutate } = useEditProject()
+	const { mutate } = useEditProject(useProjectsQueryKey())
+	const { mutate: deleteProject } = useDeleteProject(useProjectsQueryKey())
 	const { startEdit } = useProjectModal()
 
 	const pinProject = (project: Project) => (pin: number) =>
 		mutate({ ...project, pin })
 	const editProject = (id: number) => () => startEdit(id)
+
+	const confirmDeleteProject = (id: number) => {
+		Modal.confirm({
+			title: '确定删除吗?',
+			content: '点击确定删除',
+			okText: '确定',
+			onOk() {
+				deleteProject({ id })
+			},
+		})
+	}
 
 	const columns = [
 		{
@@ -94,7 +106,14 @@ export const List = ({ list, users, ...props }: ListPriject) => {
 					key: 'edit',
 				},
 				{
-					label: <Button type={'link'}>删除</Button>,
+					label: (
+						<Button
+							type={'link'}
+							onClick={() => confirmDeleteProject(project.id)}
+						>
+							删除
+						</Button>
+					),
 					key: 'del',
 				},
 			]}
@@ -108,5 +127,53 @@ export const List = ({ list, users, ...props }: ListPriject) => {
 			dataSource={list}
 			{...props}
 		/>
+	)
+}
+
+const More = ({ project }: { project: Project }) => {
+	const { startEdit } = useProjectModal()
+	const editProject = (id: number) => () => startEdit(id)
+	const { mutate: deleteProject } = useDeleteProject(useProjectsQueryKey())
+
+	const confirmDeleteProject = (id: number) => {
+		Modal.confirm({
+			title: '确定删除吗?',
+			content: '点击确定删除',
+			okText: '确定',
+			onOk() {
+				deleteProject({ id })
+			},
+		})
+	}
+	const menu = (project: Project) => (
+		<Menu
+			items={[
+				{
+					label: (
+						<Button type={'link'} onClick={editProject(project.id)}>
+							编辑
+						</Button>
+					),
+					key: 'edit',
+				},
+				{
+					label: (
+						<Button
+							type={'link'}
+							onClick={() => confirmDeleteProject(project.id)}
+						>
+							删除
+						</Button>
+					),
+					key: 'del',
+				},
+			]}
+		/>
+	)
+
+	return (
+		<Dropdown overlay={menu(project)}>
+			<ButtonNOPadding type={'link'}>···</ButtonNOPadding>
+		</Dropdown>
 	)
 }
