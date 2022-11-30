@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { Button, Drawer, Form, Input, Spin } from 'antd'
 import { useForm } from 'antd/es/form/Form'
 import { useEffect } from 'react'
-import { useProjectModal } from 'screens/project-list/util'
+import { useProjectModal, useProjectsQueryKey } from 'screens/project-list/util'
 import { useAddProject, useEditProject } from 'utils/project'
 import { ErrorBox } from './lib'
 import { UseSelect } from './user-select'
@@ -13,7 +13,11 @@ export const ProjectModal = () => {
 
 	const title = editingProject ? '编辑' : '种植植物'
 	const useMutateProject = editingProject ? useEditProject : useAddProject
-	const { mutateAsync, error, isLoading: mutateLoading } = useMutateProject()
+	const {
+		mutateAsync,
+		error,
+		isLoading: mutateLoading,
+	} = useMutateProject(useProjectsQueryKey())
 
 	const [form] = useForm()
 	const onFinish = (formValue: any) => {

@@ -66,3 +66,5 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 -# 同步函数是可以预测的异步函数是一个副作用
 -# redux-thunk 异步处理库 applyMiddleware 中间件 redux-thunk 最大的作用是使异步处理变得更友好不需要关注异步的细节，可以拦截异步并处理返回处理
 -# 状态保存的方案 React.createContext、React.redux、URL
+
+- optimistic 乐观更新

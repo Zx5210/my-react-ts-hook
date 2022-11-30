@@ -19,7 +19,7 @@
       "name": "菊花",
       "creatTime": 1665648986361,
       "ceartNameId": 1,
-      "pin": 1
+      "pin": 0
     },
     {
       "id": 2,
@@ -33,14 +33,14 @@
       "name": "三角梅",
       "creatTime": 1665648986361,
       "ceartNameId": 2,
-      "pin": 0
+      "pin": 1
     },
     {
       "id": 4,
       "name": "月季",
       "creatTime": 1665648986361,
       "ceartNameId": 2,
-      "pin": 0
+      "pin": 1
     },
     {
       "id": 5,
@@ -87,7 +87,8 @@
     {
       "name": "222",
       "ceartNameId": 1,
-      "id": 12
+      "id": 12,
+      "pin": 1
     },
     {
       "name": "3333",

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { Pin } from 'components/pin'
 import { useEditProject } from 'utils/project'
 import { ButtonNOPadding } from 'components/lib'
-import { useProjectModal } from './util'
+import { useProjectModal, useProjectsQueryKey } from './util'
 
 export interface Project {
 	id: number
