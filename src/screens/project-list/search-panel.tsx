@@ -1,13 +1,9 @@
 /* @jsxImportSource @emotion/react */
 import { Form, Input } from 'antd'
 import { UseSelect } from 'components/user-select'
-import { Project } from './list'
+import { Project } from 'types/project'
+import { User } from 'types/user'
 
-export interface User {
-	id: number
-	name: string
-	token: string
-}
 // Pick引入Project类型接口取nama和id给param
 interface SearchPanelProps {
 	users: User[]

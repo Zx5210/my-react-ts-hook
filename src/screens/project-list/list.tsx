@@ -1,6 +1,6 @@
 import { Button, Dropdown, Menu, Modal, Table, TableProps } from 'antd'
 import dayjs from 'dayjs'
-import { User } from './search-panel'
+import { User } from 'types/user'
 import { Link } from 'react-router-dom'
 import { Pin } from 'components/pin'
 import { useEditProject, useDeleteProject } from 'utils/project'

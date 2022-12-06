@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { Divider, List, Popover, Typography } from 'antd'
-import { Project } from 'screens/project-list/list'
+import { Project } from 'types/project'
 import { useProjectModal } from 'screens/project-list/util'
 import { useProjects } from 'utils/project'
 
