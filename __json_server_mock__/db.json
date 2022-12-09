@@ -26,7 +26,7 @@
 			"name": "百合",
 			"creatTime": 1665648986361,
 			"ceartNameId": 2,
-			"pin": 0
+			"pin": 1
 		},
 		{
 			"id": 3,
@@ -88,6 +88,67 @@
 		"token": "222&*212))==",
 		"id": "zx7382"
 	},
-	"kanbans": [{}],
-	"tasks": [{}]
+	"kanbans": [
+		{ "id": 1, "name": "待完成", "projectId": 1 },
+		{ "id": 2, "name": "开发中", "projectId": 1 },
+		{ "id": 3, "name": "已完成", "projectId": 1 }
+	],
+	"tasks": [
+		{
+			"id": 1,
+			"name": "task1",
+
+			"processorId": 1,
+			"projectId": 1,
+
+			"epicId": 1,
+			"kanbanId": 1,
+
+			"typeId": 1,
+			"note": 1
+		},
+		{
+			"id": 2,
+			"name": "task2",
+
+			"processorId": 2,
+			"projectId": 1,
+
+			"epicId": 1,
+			"kanbanId": 2,
+
+			"typeId": 2,
+			"note": 1
+		},
+		{
+			"id": 4,
+			"name": "task2-2",
+
+			"processorId": 3,
+			"projectId": 1,
+
+			"epicId": 1,
+			"kanbanId": 2,
+
+			"typeId": 1,
+			"note": 1
+		},
+		{
+			"id": 3,
+			"name": "task3",
+
+			"processorId": 1,
+			"projectId": 1,
+
+			"epicId": 1,
+			"kanbanId": 3,
+
+			"typeId": 1,
+			"note": 1
+		}
+	],
+	"taskTypes": [
+		{ "id": 1, "name": "collect" },
+		{ "id": 2, "name": "certified" }
+	]
 }

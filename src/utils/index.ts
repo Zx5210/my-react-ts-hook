@@ -55,7 +55,7 @@ export const useDebounce = <T>(value: T, delay?: number): T => {
   return debouncedValue
 }
 
-export const useDocumentTitle = (title: string, keepOnUnmount: boolean) => {
+export const useDocumentTitle = (title: string, keepOnUnmount?: boolean) => {
   const oldTitle = useRef(document.title).current
 
   useEffect(() => {
