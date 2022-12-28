@@ -17,7 +17,7 @@ export const AuthenticatedApp = () => {
 		<Container>
 			<Router>
 				<PageHeader />
-				<Nav>Nav</Nav>
+				{/* <Nav>Nav</Nav> */}
 
 				<Main>
 					<Routes>
@@ -32,8 +32,8 @@ export const AuthenticatedApp = () => {
 						/>
 					</Routes>
 				</Main>
-				<Aside>Aside</Aside>
-				<Footer>Footer</Footer>
+				{/* <Aside>Aside</Aside> */}
+				{/* <Footer>Footer</Footer> */}
 				<ProjectModal />
 			</Router>
 		</Container>
@@ -72,13 +72,13 @@ const PageHeader = () => {
 const Container = styled.div`
 	display: grid;
 	height: 100vh;
-	grid-template-rows: 6rem 1fr 6rem;
-	grid-template-columns: 20rem 1fr 20rem;
-	grid-row-gap: 2rem;
+	grid-template-rows: 6rem 1fr;
+	grid-template-columns: 1fr;
+	grid-row-gap: 0.1rem;
 	grid-template-areas:
 		'header header header'
-		'nav main aside'
-		'footer footer footer';
+		'main main main';
+	/* 'footer footer footer'; */
 `
 const HeaderLeft = styled(Row)`
 	color: #333;
@@ -107,13 +107,14 @@ const Header = styled.header`
 `
 const Main = styled.main`
 	grid-area: main;
+	display: flex;
 `
-const Nav = styled.nav`
-	grid-area: nav;
-`
-const Aside = styled.aside`
-	grid-area: aside;
-`
-const Footer = styled.footer`
+// const Nav = styled.nav`
+// 	grid-area: nav;
+// `
+// const Aside = styled.aside`
+// 	grid-area: aside;
+// `
+/* const Footer = styled.footer`
 	grid-area: footer;
-`
+` */
