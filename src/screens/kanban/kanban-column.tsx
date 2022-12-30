@@ -1,12 +1,13 @@
 import { kanban } from 'types/kanban'
 import { useTasks } from 'utils/task'
-import { useTaskSearchParams } from './util'
+import { useTaskSearchParams, useTasksModal } from './util'
 import collect from 'assets/collect.svg'
 import certified from 'assets/certified.svg'
 import { useTaskTypes } from 'utils/task-type'
 import styled from '@emotion/styled'
 import { Card } from 'antd'
 import { cleanObject } from 'utils'
+import { CreaeTask } from './creat-task'
 
 const TaskTypeIcon = ({ id }: { id: number }) => {
 	const { data: taskTypes } = useTaskTypes()
@@ -20,23 +21,28 @@ const TaskTypeIcon = ({ id }: { id: number }) => {
 export const KanbanColumn = ({ kanban }: { kanban: kanban }) => {
 	const { data: allTasks } = useTasks(cleanObject(useTaskSearchParams()))
 	const tasks = allTasks?.filter(task => task.kanbanId === kanban.id)
-
+	const { startEdit } = useTasksModal()
 	return (
 		<Container>
 			<h3>{kanban?.name}</h3>
 			<TaskContainer>
 				{tasks?.map(task => (
-					<Card style={{ marginBottom: '0.5rem' }} key={task.id}>
+					<Card
+						onClick={() => startEdit(task.id)}
+						style={{ cursor: 'pointer', marginBottom: '0.5rem' }}
+						key={task.id}
+					>
 						<div>{task.name}</div>
 						<TaskTypeIcon id={task.typeId} />
 					</Card>
 				))}
+				<CreaeTask kanbanId={kanban.id} />
 			</TaskContainer>
 		</Container>
 	)
 }
 
-const Container = styled.div`
+export const Container = styled.div`
 	min-width: 27rem;
 	border-radius: 6px;
 	background-color: rgb(244, 245, 247);
@@ -50,7 +56,7 @@ const TaskIcon = styled.img`
 `
 const TaskContainer = styled.div`
 	overflow: scroll;
-	flex: 1;
+	height: 40rem;
 	::-webkit-scrollbar {
 		display: none;
 	}

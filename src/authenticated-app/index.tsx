@@ -72,6 +72,7 @@ const PageHeader = () => {
 const Container = styled.div`
 	display: grid;
 	height: 100vh;
+	overflow: hidden;
 	grid-template-rows: 6rem 1fr;
 	grid-template-columns: 1fr;
 	grid-row-gap: 0.1rem;

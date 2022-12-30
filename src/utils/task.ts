@@ -1,6 +1,7 @@
 import { useHttp } from './http'
-import { useQuery } from 'react-query'
+import { QueryKey, useMutation, useQuery } from 'react-query'
 import { Task } from 'types/task'
+import { useAddConfig, useEditConfig } from './use-optimistic-options'
 
 
 export const useTasks = (param?: Partial<Task>) => {
@@ -9,3 +10,29 @@ export const useTasks = (param?: Partial<Task>) => {
     client('tasks', { data: param })
   )
 }
+
+export const useAddTask = (queryKey: QueryKey) => {
+  const client = useHttp()
+  return useMutation(
+    (params: Partial<Task>) =>
+      client(`tasks`, { data: params, method: 'POST' }),
+    useAddConfig(queryKey)
+  )
+}
+
+export const useTask = (id: Number) => {
+  const client = useHttp()
+  return useQuery(['task', { id }], () => client(`tasks/${id}`), {
+    enabled: !!id,
+  })
+}
+
+export const useEditTask = (queryKey: QueryKey) => {
+  const client = useHttp()
+  return useMutation(
+    (params: Partial<Task>) =>
+      client(`tasks/${params.id}`, { data: params, method: 'PUT' }),
+    useEditConfig(queryKey)
+  )
+}
+
