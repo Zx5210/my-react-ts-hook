@@ -98,20 +98,15 @@
       "projectId": 1
     },
     {
-      "name": "111",
+      "name": "444",
       "projectId": 1,
       "id": 4
-    },
-    {
-      "name": "1223",
-      "projectId": 1,
-      "id": 5
     }
   ],
   "tasks": [
     {
       "id": 1,
-      "name": "task1",
+      "name": "管理task1",
       "processorId": 1,
       "projectId": 1,
       "epicId": 1,
@@ -121,7 +116,7 @@
     },
     {
       "id": 2,
-      "name": "task2",
+      "name": "项目管理开发中",
       "processorId": 2,
       "projectId": 1,
       "epicId": 1,
@@ -131,7 +126,7 @@
     },
     {
       "id": 4,
-      "name": "task2-2",
+      "name": "车载系统开发中",
       "processorId": 3,
       "projectId": 1,
       "epicId": 1,
@@ -141,7 +136,7 @@
     },
     {
       "id": 3,
-      "name": "task3",
+      "name": "审计系统",
       "processorId": 1,
       "projectId": 1,
       "epicId": 1,
@@ -151,73 +146,20 @@
     },
     {
       "projectId": 1,
-      "name": "222",
-      "kanbanId": 4,
-      "id": 5,
-      "processorId": 1,
-      "typeId": 1
+      "name": "555",
+      "id": 5
     },
     {
       "projectId": 1,
-      "name": "331",
+      "name": "44444",
       "kanbanId": 4,
       "id": 6
     },
     {
       "projectId": 1,
-      "name": "333122",
+      "name": "3333",
       "kanbanId": 4,
-      "id": 7,
-      "processorId": 1,
-      "typeId": 2
-    },
-    {
-      "projectId": 1,
-      "name": "6666",
-      "kanbanId": 4,
-      "id": 8
-    },
-    {
-      "projectId": 1,
-      "name": "8888",
-      "kanbanId": 4,
-      "id": 9
-    },
-    {
-      "projectId": 1,
-      "name": "9999",
-      "kanbanId": 4,
-      "id": 10
-    },
-    {
-      "projectId": 1,
-      "name": "123",
-      "kanbanId": 4,
-      "id": 11
-    },
-    {
-      "projectId": 1,
-      "name": "4567",
-      "kanbanId": 4,
-      "id": 12
-    },
-    {
-      "projectId": 1,
-      "name": "6655",
-      "kanbanId": 4,
-      "id": 13
-    },
-    {
-      "projectId": 1,
-      "name": "45664",
-      "kanbanId": 4,
-      "id": 14
-    },
-    {
-      "projectId": 1,
-      "name": "1234",
-      "kanbanId": 2,
-      "id": 15
+      "id": 7
     }
   ],
   "taskTypes": [

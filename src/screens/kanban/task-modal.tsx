@@ -1,14 +1,14 @@
-import { Form, Input, Modal } from 'antd'
+import { Button, Form, Input, Modal } from 'antd'
 import { useForm } from 'antd/es/form/Form'
 import { TaskTypeSelect } from 'components/task-type-select'
 import { UseSelect } from 'components/user-select'
 import { useEffect } from 'react'
-import { useEditTask } from 'utils/task'
+import { useDeleteTask, useEditTask } from 'utils/task'
 import { useTasksModal, useTasksQueryKey } from './util'
 
 const layout = {
-	labelCol: { span: 8 },
-	wrapperCol: { span: 16 },
+	labelCol: { span: 4 },
+	wrapperCol: { span: 20 },
 }
 
 export const TaskModal = () => {
@@ -17,6 +17,7 @@ export const TaskModal = () => {
 	const { mutateAsync: editTask, isLoading: editLoading } = useEditTask(
 		useTasksQueryKey()
 	)
+	const { mutate: delTask } = useDeleteTask(useTasksQueryKey())
 
 	const onCancel = () => {
 		close()
@@ -31,6 +32,18 @@ export const TaskModal = () => {
 	useEffect(() => {
 		form.setFieldsValue(editingTask)
 	}, [form, editingTask])
+
+	const dleTaskConfirm = () => {
+		close()
+		Modal.confirm({
+			okText: '确定',
+			cancelText: '取消',
+			title: '是否删除任务?',
+			onOk() {
+				delTask({ id: Number(editingTaskId) })
+			},
+		})
+	}
 
 	return (
 		<Modal
@@ -58,6 +71,11 @@ export const TaskModal = () => {
 					<TaskTypeSelect />
 				</Form.Item>
 			</Form>
+			<div style={{ textAlign: 'right' }}>
+				<Button type={'link'} onClick={dleTaskConfirm}>
+					删除
+				</Button>
+			</div>
 		</Modal>
 	)
 }

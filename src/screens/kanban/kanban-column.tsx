@@ -1,13 +1,17 @@
 import { kanban } from 'types/kanban'
 import { useTasks } from 'utils/task'
-import { useTaskSearchParams, useTasksModal } from './util'
+import { useKanbansQueryKey, useTaskSearchParams, useTasksModal } from './util'
 import collect from 'assets/collect.svg'
 import certified from 'assets/certified.svg'
 import { useTaskTypes } from 'utils/task-type'
 import styled from '@emotion/styled'
-import { Card } from 'antd'
+import { Button, Card, Dropdown, Menu, Modal } from 'antd'
 import { cleanObject } from 'utils'
 import { CreaeTask } from './creat-task'
+import { Task } from 'types/task'
+import { Mark } from './mark'
+import { ButtonNOPadding, Row } from 'components/lib'
+import { useDeleteKanban } from 'utils/kanban'
 
 const TaskTypeIcon = ({ id }: { id: number }) => {
 	const { data: taskTypes } = useTaskTypes()
@@ -18,23 +22,70 @@ const TaskTypeIcon = ({ id }: { id: number }) => {
 	return <TaskIcon src={typeObj.id === 1 ? collect : certified} />
 }
 
+const TaskCard = ({ task }: { task: Task }) => {
+	const { startEdit } = useTasksModal()
+	const { name: keyWord } = useTaskSearchParams()
+	return (
+		<Card
+			onClick={() => startEdit(task.id)}
+			style={{ cursor: 'pointer', marginBottom: '0.5rem' }}
+			key={task.id}
+		>
+			<p>
+				<Mark keyWord={keyWord} name={task.name} />
+			</p>
+			<TaskTypeIcon id={task.typeId} />
+		</Card>
+	)
+}
+
+const More = ({ kanban }: { kanban: kanban }) => {
+	const { mutateAsync: delKanban } = useDeleteKanban(useKanbansQueryKey())
+	const dleKanbanConfirm = () => {
+		Modal.confirm({
+			okText: '确定',
+			cancelText: '取消',
+			title: '是否删除看板?',
+			onOk() {
+				delKanban({ id: kanban.id })
+			},
+		})
+	}
+	const menu = () => (
+		<Menu
+			items={[
+				{
+					label: (
+						<Button type={'link'} onClick={dleKanbanConfirm}>
+							删除
+						</Button>
+					),
+					key: 'del',
+				},
+			]}
+		/>
+	)
+	return (
+		<Dropdown overlay={menu}>
+			<ButtonNOPadding type={'link'}>···</ButtonNOPadding>
+		</Dropdown>
+	)
+}
+
 export const KanbanColumn = ({ kanban }: { kanban: kanban }) => {
 	const { data: allTasks } = useTasks(cleanObject(useTaskSearchParams()))
 	const tasks = allTasks?.filter(task => task.kanbanId === kanban.id)
-	const { startEdit } = useTasksModal()
+
 	return (
 		<Container>
-			<h3>{kanban?.name}</h3>
+			<Row between={true}>
+				<h3>{kanban?.name}</h3>
+				<More kanban={kanban} />
+			</Row>
+
 			<TaskContainer>
 				{tasks?.map(task => (
-					<Card
-						onClick={() => startEdit(task.id)}
-						style={{ cursor: 'pointer', marginBottom: '0.5rem' }}
-						key={task.id}
-					>
-						<div>{task.name}</div>
-						<TaskTypeIcon id={task.typeId} />
-					</Card>
+					<TaskCard key={task.name} task={task} />
 				))}
 				<CreaeTask kanbanId={kanban.id} />
 			</TaskContainer>
