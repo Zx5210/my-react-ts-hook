@@ -11,6 +11,7 @@ import { ProjectScreen } from 'screens/project'
 import { restRoute } from 'utils'
 import { ProjectModal } from 'components/project-modal'
 import { ProjectPopover } from 'components/project-popover'
+import { UserPopover } from 'components/user-popover'
 
 export const AuthenticatedApp = () => {
 	return (
@@ -58,7 +59,7 @@ const PageHeader = () => {
 					<Logo>雨林</Logo>
 				</a>
 				<ProjectPopover />
-				<span>苗圃</span>
+				<UserPopover />
 			</HeaderLeft>
 			<HeaderRight>
 				<Dropdown overlay={menu}>
