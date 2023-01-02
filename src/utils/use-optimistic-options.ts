@@ -4,9 +4,10 @@ export const useConfig = (
   queryKey: QueryKey,
   callback: (target: any, old?: any[]) => any[]
 ) => {
+
   const queryClient = useQueryClient()
   return {
-    onSuccess: () => queryClient.invalidateQueries('projects'),
+    onSuccess: () => queryClient.invalidateQueries(queryKey),
     async onMutate(target: any) {
       const previousItems = queryClient.getQueriesData(queryKey)
       queryClient.setQueryData(queryKey, (old?: any[]) => {

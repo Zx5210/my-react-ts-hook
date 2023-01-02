@@ -154,12 +154,20 @@
       "name": "44444",
       "kanbanId": 4,
       "id": 6
+    }
+  ],
+  "epics": [
+    {
+      "id": 1,
+      "name": "111",
+      "projectId": 1,
+      "start": 11111111,
+      "end": 1212211
     },
     {
+      "name": "221",
       "projectId": 1,
-      "name": "3333",
-      "kanbanId": 4,
-      "id": 7
+      "id": 2
     }
   ],
   "taskTypes": [
